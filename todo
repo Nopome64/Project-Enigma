@@ -1,0 +1,18 @@
+☐ A. Enigma Machine
+    ☐ 1.Encoder
+    ☐ 2.Mechanism
+    ☐ 3.parts
+        ✔ 1.Rotors @done(23-02-19 20:45)
+        ✔ 2.Reflector @done(23-02-19 20:45)
+        ☐ 3.Rings
+        ☐ 4.Plugboard
+
+☐ B visualize
+    ☐ 1.Box
+        ☐ 1.Machine guts
+        ☐ 2.Wires with color
+    ☐ 2.I/O
+        ☐ 1.Message input
+        ☐ 2.Message output
+        ☐ 3.Rotor positions
+        ☐ 4.Ring positions
