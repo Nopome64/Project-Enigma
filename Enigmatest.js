@@ -1,1 +1,2 @@
-Machine1=new EnigmaMachine();
+import EnigmaMachine from "./Enigma.js";
+let Machine1=new EnigmaMachine();
