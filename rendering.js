@@ -1,3 +1,4 @@
+/// <reference path="./Enigma.js"/>
 /** @type {HTMLCanvasElement} */
 const canvas = document.getElementById("canvs");
 const paint = canvas.getContext("2d");
@@ -27,9 +28,12 @@ function drawRotor(rotor,slot){
     paint.font=`${fontsize}px serif`;
     paint.fillText(letter,300,50+fontsize+(700/rotor.length)*rotor.indexOf(letter));
     paint.fillText(letter,400,50+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
+    paint.moveTo(400,50+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
+    paint.lineTo(300,50+fontsize+(700/rotor.length)*rotor.indexOf(letter));
+    
   }
-
-
+  
+  paint.stroke();
 
 }
 
