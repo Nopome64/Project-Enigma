@@ -4,8 +4,15 @@ const canvas = document.getElementById("canvs");
 const paint = canvas.getContext("2d");
 const resolution = {
   x: 1500,
-  y: 900,
+  y: 800,
 };
+rotorplace= {
+  left:450,
+  middle:650,
+  right:850,
+
+
+}
 canvas.style.height = resolution.y;
 canvas.height = resolution.y;
 canvas.style.width = resolution.x;
@@ -19,6 +26,7 @@ canvas.width = resolution.x;
  */
 function drawRotor(rotor,slot){
   const fontsize=24;
+  const position=slot
 
   paint.beginPath();
   for(let letter of rotor){
@@ -26,10 +34,11 @@ function drawRotor(rotor,slot){
     console.log(letter,rotor.indexOf(letter));
     paint.fillStyle="black";
     paint.font=`${fontsize}px serif`;
-    paint.fillText(letter,300,50+fontsize+(700/rotor.length)*rotor.indexOf(letter));
-    paint.fillText(letter,400,50+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
-    paint.moveTo(400,50+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
-    paint.lineTo(300,50+fontsize+(700/rotor.length)*rotor.indexOf(letter));
+    paint.fillText(letter,position+13,50+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
+    paint.moveTo(position+13,50+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
+    paint.lineTo(position,50+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
+    paint.lineTo(position-150,50+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
+    paint.lineTo(position-175,50+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
     
   }
   
@@ -55,6 +64,8 @@ function draw(){
   paint.stroke();
   paint.fill();
   
-  drawRotor(Machine1.config.rotors.rotorRight,0);
+  drawRotor(Machine1.config.rotors.rotorLeft,rotorplace.left);
+  drawRotor(Machine1.config.rotors.rotorMid,rotorplace.middle);
+  drawRotor(Machine1.config.rotors.rotorRight,rotorplace.right);
 }
 draw();
