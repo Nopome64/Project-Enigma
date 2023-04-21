@@ -38,17 +38,20 @@ function drawRotor(rotor,slot){
     console.log(letter,rotor.indexOf(letter));
     paint.fillStyle="black";
     paint.font=`${fontsize}px serif`;
-    paint.fillText(letter,position+13,boxYoffset+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
-    paint.moveTo(position+13,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
-    paint.lineTo(position,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
-    paint.lineTo(position-150,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
-    paint.lineTo(position-175,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
+    drawRotorLine(letter,position,rotor);
     
   }
 
   
   paint.stroke();
 
+}
+function drawRotorLine(letter,position,rotor){
+  paint.fillText(letter,position+13,boxYoffset+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
+  paint.moveTo(position+13,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
+  paint.lineTo(position,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
+  paint.lineTo(position-150,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
+  paint.lineTo(position-175,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
 }
 
 function drawReflector(ref){
@@ -67,13 +70,22 @@ for(let i=0;i<ref.length;i++){
     continue;
   }
   paint.beginPath();
-  paint.ellipse(250,(fromY+toY)/2-fontsize/2,50,(toY-fromY)/2,0,Math.PI*0.5,Math.PI*1.5)
+  paint.ellipse(250,(fromY+toY)/2-fontsize/2,((toY-fromY)/2)*1/2.5,(toY-fromY)/2,0,Math.PI*0.5,Math.PI*1.5)
   paint.stroke();
 }
 
 }
 
+function Highlightpath(path){
 
+  paint.fillStyle="orange";
+  paint.strokeStyle="orange";
+  paint.beginPath();
+  drawRotorLine(path,rotorplace.right,Machine1.config.rotors.rotorRight);
+
+
+  paint.stroke();
+}
 
 function draw(){
   paint.fillStyle = "rgb(10,44,201)";
