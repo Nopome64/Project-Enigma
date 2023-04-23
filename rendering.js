@@ -39,16 +39,9 @@ function drawRotor(rotor, slot) {
 	paint.stroke();
 }
 function drawRotorLine(letter, position, rotor) {
-	const yOffset = (letter) =>
-		boxYoffset +
-		0.5 * fontsize +
-		(700 / rotor.length) * alphabet.indexOf(letter);
+	const yOffset = (letter) => boxYoffset + 0.5 * fontsize + (700 / rotor.length) * alphabet.indexOf(letter);
 
-	paint.fillText(
-		letter,
-		position + fontsize * 0.7,
-		yOffset(letter) + fontsize / 2
-	);
+	paint.fillText(letter, position + fontsize * 0.7, yOffset(letter) + fontsize / 2);
 
 	paint.moveTo(position + fontsize / 2, yOffset(letter));
 	paint.lineTo(position, yOffset(letter));
@@ -60,14 +53,6 @@ function drawRotorLine(letter, position, rotor) {
 }
 
 function drawReflector(ref) {
-	for (let letter of ref) {
-		paint.fillText(
-			letter,
-			250 + 13,
-			boxYoffset + fontsize + (700 / ref.length) * alphabet.indexOf(letter)
-		);
-	}
-
 	for (let i = 0; i < ref.length; i++) {
 		let fromletter = alphabet[i];
 		let toletter = ref[i];
@@ -76,13 +61,11 @@ function drawReflector(ref) {
 }
 
 function drawReflectorLine(fromletter, toletter, ref) {
-	let fromY =
-		boxYoffset + fontsize + (700 / ref.length) * alphabet.indexOf(fromletter);
-	let toY =
-		boxYoffset + fontsize + (700 / ref.length) * alphabet.indexOf(toletter);
-	if (fromY > toY) {
-		return;
-	}
+	let fromY = boxYoffset + fontsize + (700 / ref.length) * alphabet.indexOf(fromletter);
+	let toY = boxYoffset + fontsize + (700 / ref.length) * alphabet.indexOf(toletter);
+	if (fromY > toY) return;
+	paint.fillText(fromletter, 250 + 13, fromY);
+	paint.fillText(toletter, 250 + 13, toY);
 	paint.beginPath();
 	paint.ellipse(
 		250,
@@ -110,31 +93,11 @@ function Highlightpath(path) {
 	paint.beginPath();
 	paint.fillStyle = "red";
 	paint.strokeStyle = "red";
-	paint.fillText(
-		path[3],
-		250 + 13,
-		boxYoffset +
-			fontsize +
-			(700 / Machine1.config.rotors.reflector.length) *
-				alphabet.indexOf(path[3])
-	);
-	paint.fillText(
-		path[4],
-		250 + 13,
-		boxYoffset +
-			fontsize +
-			(700 / Machine1.config.rotors.reflector.length) *
-				alphabet.indexOf(path[4])
-	);
 	let reflectorletters = [
 		path[3].charCodeAt(0) > path[4].charCodeAt(0) ? path[4] : path[3],
 		path[3].charCodeAt(0) > path[4].charCodeAt(0) ? path[3] : path[4],
 	];
-	drawReflectorLine(
-		reflectorletters[0],
-		reflectorletters[1],
-		Machine1.config.rotors.reflector
-	);
+	drawReflectorLine(reflectorletters[0], reflectorletters[1], Machine1.config.rotors.reflector);
 	paint.stroke();
 
 	paint.beginPath();
