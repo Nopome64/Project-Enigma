@@ -47,14 +47,15 @@ class EnigmaMachine {
 		function enclod(fromalpha, toalpha, char) {
 			return toalpha[fromalpha.indexOf(char)];
 		}
-		char = enclod(alphabet, this.config.rotors.rotorRight, char);
-		char = enclod(alphabet, this.config.rotors.rotorMid, char);
-		char = enclod(alphabet, this.config.rotors.rotorLeft, char);
-		char = enclod(alphabet, this.config.rotors.reflector, char);
-		char = enclod(this.config.rotors.rotorLeft, alphabet, char);
-		char = enclod(this.config.rotors.rotorMid, alphabet, char);
-		char = enclod(this.config.rotors.rotorRight, alphabet, char);
-		return char;
+		let path = [char]
+		path.push(enclod(alphabet, this.config.rotors.rotorRight, path[path.length-1]));
+		path.push(enclod(alphabet, this.config.rotors.rotorMid, path[path.length-1]));
+		path.push(enclod(alphabet, this.config.rotors.rotorLeft, path[path.length-1]));
+		path.push(enclod(alphabet, this.config.rotors.reflector, path[path.length-1]));
+		path.push(enclod(this.config.rotors.rotorLeft, alphabet, path[path.length-1]));
+		path.push(enclod(this.config.rotors.rotorMid, alphabet, path[path.length-1]));
+		path.push(enclod(this.config.rotors.rotorRight, alphabet, path[path.length-1]));
+		return path;
 	}
 
 	reset() {
