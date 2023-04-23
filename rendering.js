@@ -30,8 +30,8 @@ function drawRotor(rotor, slot) {
 
 	paint.beginPath();
 	for (let letter of alphabet) {
-		console.log(letter, rotor.indexOf(letter));
 		paint.fillStyle = "black";
+		paint.strokeStyle = "black";
 		paint.font = `${fontsize}px serif`;
 		drawRotorLine(letter, position, rotor);
 	}
@@ -44,15 +44,19 @@ function drawRotorLine(letter, position, rotor) {
 		0.5 * fontsize +
 		(700 / rotor.length) * alphabet.indexOf(letter);
 
-	paint.fillText(letter, position + 13, yOffset(letter) + fontsize / 2);
+	paint.fillText(
+		letter,
+		position + fontsize * 0.7,
+		yOffset(letter) + fontsize / 2
+	);
 
-	paint.moveTo(position + 13, yOffset(letter));
+	paint.moveTo(position + fontsize / 2, yOffset(letter));
 	paint.lineTo(position, yOffset(letter));
 
 	letter = rotor[alphabet.indexOf(letter)];
 
 	paint.lineTo(position - 150, yOffset(letter));
-	paint.lineTo(position - 175, yOffset(letter));
+	paint.lineTo(position - 150 - fontsize / 2, yOffset(letter));
 }
 
 function drawReflector(ref) {
@@ -67,34 +71,81 @@ function drawReflector(ref) {
 	for (let i = 0; i < ref.length; i++) {
 		let fromletter = alphabet[i];
 		let toletter = ref[i];
-		let fromY =
-			boxYoffset + fontsize + (700 / ref.length) * alphabet.indexOf(fromletter);
-		let toY =
-			boxYoffset + fontsize + (700 / ref.length) * alphabet.indexOf(toletter);
-		if (fromY > toY) {
-			continue;
-		}
-		paint.beginPath();
-		paint.ellipse(
-			250,
-			(fromY + toY) / 2 - fontsize / 2,
-			(((toY - fromY) / 2) * 1) / 2.5,
-			(toY - fromY) / 2,
-			0,
-			Math.PI * 0.5,
-			Math.PI * 1.5
-		);
-		paint.stroke();
+		drawReflectorLine(fromletter, toletter, ref);
 	}
 }
 
+function drawReflectorLine(fromletter, toletter, ref) {
+	let fromY =
+		boxYoffset + fontsize + (700 / ref.length) * alphabet.indexOf(fromletter);
+	let toY =
+		boxYoffset + fontsize + (700 / ref.length) * alphabet.indexOf(toletter);
+	if (fromY > toY) {
+		return;
+	}
+	paint.beginPath();
+	paint.ellipse(
+		250,
+		(fromY + toY) / 2 - fontsize / 2,
+		(((toY - fromY) / 2) * 1) / 2.5,
+		(toY - fromY) / 2,
+		0,
+		Math.PI * 0.5,
+		Math.PI * 1.5
+	);
+	paint.stroke();
+}
+
+/** @param {string[]} path */
 function Highlightpath(path) {
+	paint.lineWidth = 3;
 	paint.fillStyle = "orange";
 	paint.strokeStyle = "orange";
 	paint.beginPath();
-	drawRotorLine(path, rotorplace.right, Machine1.config.rotors.rotorRight);
+	drawRotorLine(path[0], rotorplace.right, Machine1.config.rotors.rotorRight);
+	drawRotorLine(path[1], rotorplace.middle, Machine1.config.rotors.rotorMid);
+	drawRotorLine(path[2], rotorplace.left, Machine1.config.rotors.rotorLeft);
+	paint.stroke();
+
+	paint.beginPath();
+	paint.fillStyle = "red";
+	paint.strokeStyle = "red";
+	paint.fillText(
+		path[3],
+		250 + 13,
+		boxYoffset +
+			fontsize +
+			(700 / Machine1.config.rotors.reflector.length) *
+				alphabet.indexOf(path[3])
+	);
+	paint.fillText(
+		path[4],
+		250 + 13,
+		boxYoffset +
+			fontsize +
+			(700 / Machine1.config.rotors.reflector.length) *
+				alphabet.indexOf(path[4])
+	);
+	let reflectorletters = [
+		path[3].charCodeAt(0) > path[4].charCodeAt(0) ? path[4] : path[3],
+		path[3].charCodeAt(0) > path[4].charCodeAt(0) ? path[3] : path[4],
+	];
+	drawReflectorLine(
+		reflectorletters[0],
+		reflectorletters[1],
+		Machine1.config.rotors.reflector
+	);
+	paint.stroke();
+
+	paint.beginPath();
+	paint.fillStyle = "green";
+	paint.strokeStyle = "green";
+	drawRotorLine(path[5], rotorplace.left, Machine1.config.rotors.rotorLeft);
+	drawRotorLine(path[6], rotorplace.middle, Machine1.config.rotors.rotorMid);
+	drawRotorLine(path[7], rotorplace.right, Machine1.config.rotors.rotorRight);
 
 	paint.stroke();
+	paint.lineWidth = 1;
 }
 
 function draw() {
