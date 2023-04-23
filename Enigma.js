@@ -37,24 +37,26 @@ class EnigmaMachine {
 		// todo
 	}
 
+	/** @param {string} char*/
 	encodeChar(char) {
 		/**
-     *
-     * @param {string} rotor
-     * @param {string} char
-     * @returns
-     */
+		 *
+		 * @param {string} fromalpha
+		 * @param {string} toalpha
+		 * @param {string} char
+		 */
 		function enclod(fromalpha, toalpha, char) {
 			return toalpha[fromalpha.indexOf(char)];
 		}
-		let path = [char]
-		path.push(enclod(alphabet, this.config.rotors.rotorRight, path[path.length-1]));
-		path.push(enclod(alphabet, this.config.rotors.rotorMid, path[path.length-1]));
-		path.push(enclod(alphabet, this.config.rotors.rotorLeft, path[path.length-1]));
-		path.push(enclod(alphabet, this.config.rotors.reflector, path[path.length-1]));
-		path.push(enclod(this.config.rotors.rotorLeft, alphabet, path[path.length-1]));
-		path.push(enclod(this.config.rotors.rotorMid, alphabet, path[path.length-1]));
-		path.push(enclod(this.config.rotors.rotorRight, alphabet, path[path.length-1]));
+		const rotors = this.config.rotors;
+		let path = [char];
+		path.push(enclod(alphabet, rotors.rotorRight, path[path.length - 1]));
+		path.push(enclod(alphabet, rotors.rotorMid, path[path.length - 1]));
+		path.push(enclod(alphabet, rotors.rotorLeft, path[path.length - 1]));
+		path.push(enclod(alphabet, rotors.reflector, path[path.length - 1]));
+		path.push(enclod(rotors.rotorLeft, alphabet, path[path.length - 1]));
+		path.push(enclod(rotors.rotorMid, alphabet, path[path.length - 1]));
+		path.push(enclod(rotors.rotorRight, alphabet, path[path.length - 1]));
 		return path;
 	}
 

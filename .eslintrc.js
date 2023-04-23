@@ -1,34 +1,18 @@
 module.exports = {
-	"env": {
-		"browser": true,
-		"es2021": true
+	env: {
+		browser: true,
+		es2021: true,
 	},
-	"extends": "eslint:recommended",
-	"overrides": [
-	],
-	"parserOptions": {
-		"ecmaVersion": "latest",
-		"sourceType": "script"
+	extends: ["prettier"],
+	overrides: [],
+	plugins: ["prettier"],
+	parserOptions: {
+		ecmaVersion: "latest",
+		sourceType: "script",
 	},
-	"rules": {
-		"indent": [
-			"error",
-			"tab"
-		],
-		"linebreak-style": [
-			"error",
-			"windows"
-		],
-		"quotes": [
-			"error",
-			"double"
-		],
-		"semi": [
-			"error",
-			"always"
-		],
-		"no-unused-vars":[
-			"none"
-		]
-	}
+	rules: {
+		semi: ["error", "always"],
+		"no-unused-vars": ["off"],
+		"prettier/prettier": ["error"],
+	},
 };

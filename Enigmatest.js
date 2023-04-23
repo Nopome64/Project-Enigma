@@ -1,1 +1,1 @@
-let Machine1=new EnigmaMachine();
+let Machine1 = new EnigmaMachine();
