@@ -33,7 +33,7 @@ function drawRotor(rotor,slot){
   const position=slot
 
   paint.beginPath();
-  for(let letter of rotor){
+  for(let letter of alphabet){
 
     console.log(letter,rotor.indexOf(letter));
     paint.fillStyle="black";
@@ -47,11 +47,18 @@ function drawRotor(rotor,slot){
 
 }
 function drawRotorLine(letter,position,rotor){
+  const yOffset = letter => boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter);
+
+  
   paint.fillText(letter,position+13,boxYoffset+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
-  paint.moveTo(position+13,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
-  paint.lineTo(position,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
-  paint.lineTo(position-150,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
-  paint.lineTo(position-175,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
+  
+  paint.moveTo(position+13,yOffset(letter));
+  paint.lineTo(position,yOffset(letter));
+
+  letter = rotor[alphabet.indexOf(letter)];
+  
+  paint.lineTo(position-150,yOffset(letter));
+  paint.lineTo(position-175,yOffset(letter));
 }
 
 function drawReflector(ref){
