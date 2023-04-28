@@ -17,6 +17,9 @@ const rotorplace= {
 }
 const boxYoffset=50;
 
+function height(letter){
+  return(boxYoffset+0.5*fontsize+(700/alphabet.length)*alphabet.indexOf(letter));
+}
 
 canvas.style.height = resolution.y;
 canvas.height = resolution.y;
@@ -54,23 +57,57 @@ function drawRotorLine(letter,position,rotor){
   paint.lineTo(position-175,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
 }
 
+function drawpath(entry,exit,position){
+
+  // paint.fillStyle="orange";
+  // paint.strokeStyle="orange";
+  paint.beginPath();
+  paint.fillText(entry,position+13,height(entry)+0.5*fontsize);
+  paint.moveTo(position+13,height(entry));
+  paint.lineTo(position,height(entry));
+  paint.lineTo(position-150,height(exit));
+  paint.lineTo(position-175,height(exit));
+  paint.stroke();
+}
+function drawRefPath(entry){
+  paint.beginPath();
+
+  let l1=entry;
+  let l2=Machine1.config.rotors.reflector[alphabet.indexOf(entry)];
+  paint.fillText(l1,250+13,height(l1)+0.5*fontsize);
+  paint.fillText(l2,250+13,height(l2)+0.5*fontsize);
+
+  let fromY=height(l1);
+  let toY=height(l2);
+
+
+try{
+  paint.ellipse(250,(fromY+toY)/2,((toY-fromY)/2)*1/2.5,(toY-fromY)/2,0,Math.PI*0.5,Math.PI*1.5);
+  paint.stroke();
+
+}
+catch{
+  paint.ellipse(250,(toY+fromY)/2,((fromY-ToY)/2)*1/2.5,(fromY-toY)/2,0,Math.PI*0.5,Math.PI*1.5);
+  paint.stroke();
+}
+}
 function drawReflector(ref){
 
   for(let letter of ref){
-    paint.fillText(letter,250+13,boxYoffset+fontsize+(700/ref.length)*alphabet.indexOf(letter));
+    paint.fillText(letter,250+13,boxYoffset+fontsize+(700/alphabet.length)*alphabet.indexOf(letter));
   }
 
 
 for(let i=0;i<ref.length;i++){
   let fromletter=alphabet[i];
   let toletter=ref[i];
-  let fromY = boxYoffset+fontsize+(700/ref.length)*alphabet.indexOf(fromletter);
-  let toY = boxYoffset+fontsize+(700/ref.length)*alphabet.indexOf(toletter);
+  let fromY = boxYoffset+fontsize+(700/alphabet.length)*alphabet.indexOf(fromletter);
+  let toY = boxYoffset+fontsize+(700/alphabet.length)*alphabet.indexOf(toletter);
   if(fromY>toY){
     continue;
   }
   paint.beginPath();
-  paint.ellipse(250,(fromY+toY)/2-fontsize/2,((toY-fromY)/2)*1/2.5,(toY-fromY)/2,0,Math.PI*0.5,Math.PI*1.5)
+  paint.ellipse(250,(fromY+toY)/2-fontsize/2,((toY-fromY)/2)*1/2.5,(toY-fromY)/2,0,Math.PI*0.5,Math.PI*1.5);
   paint.stroke();
 }
 
@@ -80,14 +117,30 @@ function Highlightpath(path){
 
   paint.fillStyle="orange";
   paint.strokeStyle="orange";
-  paint.beginPath();
-  drawRotorLine(path,rotorplace.right,Machine1.config.rotors.rotorRight);
+  
+  drawpath(path[0],path[1],rotorplace.right);
+  drawpath(path[1],path[2],rotorplace.middle);
+  drawpath(path[2],path[3],rotorplace.left);
+  // paint.fillstyle="red";
+  // paint.strokeStyle="red";
+  // drawRefPath(path[3]);
+  paint.fillStyle="lime";
+  paint.strokeStyle="lime";
+  drawpath(path[5],path[4],rotorplace.left);
+  drawpath(path[6],path[5],rotorplace.middle);
+  drawpath(path[7],path[6],rotorplace.right);
+  paint.fillstyle="red";
+  paint.strokeStyle="red";
+  drawRefPath(path[3]);
+  // drawRotorLine(path,rotorplace.right,Machine1.config.rotors.rotorRight);
 
 
-  paint.stroke();
+  
 }
 
 function draw(){
+  paint.strokeStyle="black"
+
   paint.fillStyle = "rgb(10,44,201)";
   paint.fillRect(0, 0, resolution.x, resolution.y);
   paint.fillStyle = "rgba(200,20,10,0.3)";

@@ -1,3 +1,5 @@
+/// <reference path="./rendering.js"/>
+
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 //rotates string right
 String.prototype.rotate = function (i) {
@@ -47,13 +49,24 @@ class EnigmaMachine {
 		function enclod(fromalpha, toalpha, char) {
 			return toalpha[fromalpha.indexOf(char)];
 		}
+		let path=[];
+		path.push(char);
 		char = enclod(alphabet, this.config.rotors.rotorRight, char);
+		path.push(char);
 		char = enclod(alphabet, this.config.rotors.rotorMid, char);
+		path.push(char);
 		char = enclod(alphabet, this.config.rotors.rotorLeft, char);
+		path.push(char);
 		char = enclod(alphabet, this.config.rotors.reflector, char);
+		path.push(char);
 		char = enclod(this.config.rotors.rotorLeft, alphabet, char);
+		path.push(char);
 		char = enclod(this.config.rotors.rotorMid, alphabet, char);
+		path.push(char);
 		char = enclod(this.config.rotors.rotorRight, alphabet, char);
+		path.push(char);
+		console.log(path);
+		Highlightpath(path);
 		return char;
 	}
 
