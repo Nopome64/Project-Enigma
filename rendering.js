@@ -80,16 +80,14 @@ function drawRefPath(entry){
   let fromY=height(l1);
   let toY=height(l2);
 
-
-try{
+if(fromY<toY){
   paint.ellipse(250,(fromY+toY)/2,((toY-fromY)/2)*1/2.5,(toY-fromY)/2,0,Math.PI*0.5,Math.PI*1.5);
+}
+else{
+  paint.ellipse(250,(toY+fromY)/2,((fromY-toY)/2)*1/2.5,(fromY-toY)/2,0,Math.PI*0.5,Math.PI*1.5);
+}
   paint.stroke();
 
-}
-catch{
-  paint.ellipse(250,(toY+fromY)/2,((fromY-ToY)/2)*1/2.5,(fromY-toY)/2,0,Math.PI*0.5,Math.PI*1.5);
-  paint.stroke();
-}
 }
 function drawReflector(ref){
 
