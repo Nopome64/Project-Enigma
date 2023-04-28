@@ -1,11 +1,29 @@
-/// <reference path="./rendering.js"/>
+import { Highlightpath } from "./rendering.js";
 
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+export const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+declare global {
+	interface String {
+		rotate:(i: number)=> string;
+	}
+}
+
 //rotates string right
 String.prototype.rotate = function (i) {
 	return this.slice(-i) + this.slice(0, -i);
 };
-class EnigmaMachine {
+export class EnigmaMachine {
+	state: {
+		rotorPositions: number[];
+		ringPositions: number[];
+	}
+	config: {
+		rotors: {
+			reflector: string;
+			rotorLeft: string;
+			rotorMid: string;
+			rotorRight: string;
+		}
+	}
 	rotormappings = {
 		I: "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
 		II: "AJDKSIRUXBLHWTMCQGZNPYFVOE",
@@ -23,7 +41,7 @@ class EnigmaMachine {
 	constructor() {
 		this.state = {
 			rotorPositions: [0, 0, 0, 0],
-			ringPosition: [0, 0, 0, 0],
+			ringPositions: [0, 0, 0, 0],
 		};
 		this.config = {
 			rotors: {
@@ -35,18 +53,18 @@ class EnigmaMachine {
 		};
 	}
 
-	encode(input) {
+	encode(input:string) {
 		// todo
 	}
 
-	encodeChar(char) {
+	encodeChar(char:string) {
 		/**
      *
      * @param {string} rotor
      * @param {string} char
      * @returns
      */
-		function enclod(fromalpha, toalpha, char) {
+		function enclod(fromalpha:string, toalpha:string, char:string) {
 			return toalpha[fromalpha.indexOf(char)];
 		}
 		let path=[];

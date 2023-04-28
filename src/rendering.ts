@@ -1,8 +1,11 @@
-/// <reference path="./Enigma.js"/>
-/// <reference path="./Enigmatest.js"/>
-/** @type {HTMLCanvasElement} */
-const canvas = document.getElementById("canvs");
-const paint = canvas.getContext("2d");
+import { EnigmaMachine, alphabet } from "./Enigma.js";
+
+let currentMachine: EnigmaMachine
+
+const canvas = document.getElementById("canvs") as HTMLCanvasElement;
+/// ! is a non-null assertion operator
+const paint = canvas.getContext("2d")!;
+
 const resolution = {
   x: 1500,
   y: 800,
@@ -17,13 +20,13 @@ const rotorplace= {
 }
 const boxYoffset=50;
 
-function height(letter){
+function height(letter:string){
   return(boxYoffset+0.5*fontsize+(700/alphabet.length)*alphabet.indexOf(letter));
 }
 
-canvas.style.height = resolution.y;
+canvas.style.height = String(resolution.y);
 canvas.height = resolution.y;
-canvas.style.width = resolution.x;
+canvas.style.width = String(resolution.x);
 canvas.width = resolution.x;
 
 
@@ -32,7 +35,7 @@ canvas.width = resolution.x;
  * @param {string} rotor 
  * @param {*} slot 
  */
-function drawRotor(rotor,slot){
+function drawRotor(rotor:string,slot:number){
   const position=slot
 
   paint.beginPath();
@@ -49,7 +52,7 @@ function drawRotor(rotor,slot){
   paint.stroke();
 
 }
-function drawRotorLine(letter,position,rotor){
+function drawRotorLine(letter:string,position:number,rotor:string){
   paint.fillText(letter,position+13,boxYoffset+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
   paint.moveTo(position+13,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
   paint.lineTo(position,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
@@ -57,7 +60,7 @@ function drawRotorLine(letter,position,rotor){
   paint.lineTo(position-175,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
 }
 
-function drawpath(entry,exit,position){
+function drawpath(entry:string,exit:string,position:number){
 
   // paint.fillStyle="orange";
   // paint.strokeStyle="orange";
@@ -69,11 +72,11 @@ function drawpath(entry,exit,position){
   paint.lineTo(position-175,height(exit));
   paint.stroke();
 }
-function drawRefPath(entry){
+function drawRefPath(entry:string){
   paint.beginPath();
 
   let l1=entry;
-  let l2=Machine1.config.rotors.reflector[alphabet.indexOf(entry)];
+  let l2=currentMachine.config.rotors.reflector[alphabet.indexOf(entry)];
   paint.fillText(l1,250+13,height(l1)+0.5*fontsize);
   paint.fillText(l2,250+13,height(l2)+0.5*fontsize);
 
@@ -89,7 +92,7 @@ else{
   paint.stroke();
 
 }
-function drawReflector(ref){
+function drawReflector(ref:string){
 
   for(let letter of ref){
     paint.fillText(letter,250+13,boxYoffset+fontsize+(700/alphabet.length)*alphabet.indexOf(letter));
@@ -111,7 +114,7 @@ for(let i=0;i<ref.length;i++){
 
 }
 
-function Highlightpath(path){
+export function Highlightpath(path:string[]){
 
   paint.fillStyle="orange";
   paint.strokeStyle="orange";
@@ -127,7 +130,7 @@ function Highlightpath(path){
   drawpath(path[5],path[4],rotorplace.left);
   drawpath(path[6],path[5],rotorplace.middle);
   drawpath(path[7],path[6],rotorplace.right);
-  paint.fillstyle="red";
+  paint.fillStyle="red";
   paint.strokeStyle="red";
   drawRefPath(path[3]);
   // drawRotorLine(path,rotorplace.right,Machine1.config.rotors.rotorRight);
@@ -136,7 +139,8 @@ function Highlightpath(path){
   
 }
 
-function draw(){
+export function draw(machine:EnigmaMachine){
+  currentMachine=machine;
   paint.strokeStyle="black"
 
   paint.fillStyle = "rgb(10,44,201)";
@@ -148,9 +152,8 @@ function draw(){
   }
 
   
-  drawRotor(Machine1.config.rotors.rotorLeft,rotorplace.left);
-  drawRotor(Machine1.config.rotors.rotorMid,rotorplace.middle);
-  drawRotor(Machine1.config.rotors.rotorRight.rotate(0),rotorplace.right);
-  drawReflector(Machine1.config.rotors.reflector);
+  drawRotor(machine.config.rotors.rotorLeft,rotorplace.left);
+  drawRotor(machine.config.rotors.rotorMid,rotorplace.middle);
+  drawRotor(machine.config.rotors.rotorRight.rotate(0),rotorplace.right);
+  drawReflector(machine.config.rotors.reflector);
 }
-draw();

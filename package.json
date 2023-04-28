@@ -4,7 +4,7 @@
   "description": "",
   "main": "Enigma.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Nopome64/Project-Enigma#readme",
   "devDependencies": {
-    "eslint": "^8.36.0"
+    "eslint": "^8.36.0",
+    "typescript": "^5.0.4"
   }
 }
