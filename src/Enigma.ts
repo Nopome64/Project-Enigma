@@ -3,7 +3,7 @@ import { Highlightpath } from "./rendering.js";
 export const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 declare global {
 	interface String {
-		rotate:(i: number)=> string;
+		rotate: (i: number) => string;
 	}
 }
 
@@ -53,21 +53,21 @@ export class EnigmaMachine {
 		};
 	}
 
-	encode(input:string) {
+	encode(input: string) {
 		// todo
 	}
 
-	encodeChar(char:string) {
+	encodeChar(char: string) {
 		/**
-     *
-     * @param {string} rotor
-     * @param {string} char
-     * @returns
-     */
-		function enclod(fromalpha:string, toalpha:string, char:string) {
+	 *
+	 * @param {string} rotor
+	 * @param {string} char
+	 * @returns
+	 */
+		function enclod(fromalpha: string, toalpha: string, char: string) {
 			return toalpha[fromalpha.indexOf(char)];
 		}
-		let path=[];
+		let path = [];
 		path.push(char);
 		char = enclod(alphabet, this.config.rotors.rotorRight, char);
 		path.push(char);
