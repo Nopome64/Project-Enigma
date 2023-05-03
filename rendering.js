@@ -15,6 +15,7 @@ const rotorplace= {
 
 
 }
+const rotation=0;
 const boxYoffset=50;
 
 function height(letter){
@@ -53,8 +54,8 @@ function drawRotorLine(letter,position,rotor){
   paint.fillText(letter,position+13,boxYoffset+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
   paint.moveTo(position+13,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
   paint.lineTo(position,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
-  paint.lineTo(position-150,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
-  paint.lineTo(position-175,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.indexOf(letter));
+  paint.lineTo(position-150,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.rotate(rotation).indexOf(letter));
+  paint.lineTo(position-175,boxYoffset+0.5*fontsize+(700/rotor.length)*alphabet.rotate(rotation).indexOf(letter));
 }
 
 function drawpath(entry,exit,position){
@@ -112,6 +113,7 @@ for(let i=0;i<ref.length;i++){
 }
 
 function Highlightpath(path){
+  paint.lineWidth=2;
 
   paint.fillStyle="orange";
   paint.strokeStyle="orange";
@@ -119,25 +121,26 @@ function Highlightpath(path){
   drawpath(path[0],path[1],rotorplace.right);
   drawpath(path[1],path[2],rotorplace.middle);
   drawpath(path[2],path[3],rotorplace.left);
-  // paint.fillstyle="red";
-  // paint.strokeStyle="red";
-  // drawRefPath(path[3]);
+  paint.fillStyle="red";
+  paint.strokeStyle="red";
+  drawRefPath(path[3]);
   paint.fillStyle="lime";
   paint.strokeStyle="lime";
   drawpath(path[5],path[4],rotorplace.left);
   drawpath(path[6],path[5],rotorplace.middle);
   drawpath(path[7],path[6],rotorplace.right);
-  paint.fillstyle="red";
-  paint.strokeStyle="red";
-  drawRefPath(path[3]);
-  // drawRotorLine(path,rotorplace.right,Machine1.config.rotors.rotorRight);
+
+  // draws out the path as text above
+  // also showed up as a complete mistake but ended up doing something so i kept it
+  drawRotorLine(path,rotorplace.right,Machine1.config.rotors.rotorRight);
 
 
   
 }
 
 function draw(){
-  paint.strokeStyle="black"
+  paint.strokeStyle="black";
+  paint.lineWidth=1;
 
   paint.fillStyle = "rgb(10,44,201)";
   paint.fillRect(0, 0, resolution.x, resolution.y);
@@ -150,7 +153,7 @@ function draw(){
   
   drawRotor(Machine1.config.rotors.rotorLeft,rotorplace.left);
   drawRotor(Machine1.config.rotors.rotorMid,rotorplace.middle);
-  drawRotor(Machine1.config.rotors.rotorRight.rotate(0),rotorplace.right);
+  drawRotor(Machine1.config.rotors.rotorRight.rotate(rotation),rotorplace.right);
   drawReflector(Machine1.config.rotors.reflector);
 }
 draw();
