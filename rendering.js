@@ -15,7 +15,7 @@ const rotorplace= {
 
 
 }
-const rotation=0;
+
 const boxYoffset=50;
 
 function height(letter){
@@ -33,16 +33,17 @@ canvas.width = resolution.x;
  * @param {string} rotor 
  * @param {*} slot 
  */
-function drawRotor(rotor,slot){
+function drawRotor(rotor,slot,rotation){
   const position=slot
+  rotor=rotor.rotate(rotation);
 
   paint.beginPath();
   for(let letter of rotor){
 
-    console.log(letter,rotor.indexOf(letter));
+    // console.log(letter,rotor.indexOf(letter));
     paint.fillStyle="black";
     paint.font=`${fontsize}px serif`;
-    drawRotorLine(letter,position,rotor);
+    drawRotorLine(letter,position,rotor,rotation);
     
   }
 
@@ -50,7 +51,7 @@ function drawRotor(rotor,slot){
   paint.stroke();
 
 }
-function drawRotorLine(letter,position,rotor){
+function drawRotorLine(letter,position,rotor,rotation){
   paint.fillText(letter,position+13,boxYoffset+fontsize+(700/rotor.length)*alphabet.indexOf(letter));
   paint.moveTo(position+13,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
   paint.lineTo(position,boxYoffset+0.5*fontsize+(700/rotor.length)*rotor.indexOf(letter));
@@ -150,10 +151,11 @@ function draw(){
 
   }
 
-  
-  drawRotor(Machine1.config.rotors.rotorLeft,rotorplace.left);
-  drawRotor(Machine1.config.rotors.rotorMid,rotorplace.middle);
-  drawRotor(Machine1.config.rotors.rotorRight.rotate(rotation),rotorplace.right);
-  drawReflector(Machine1.config.rotors.reflector);
+  let RP = Machine1.state.rotorPositions;
+  let rotors = Machine1.config.rotors;
+  drawRotor(rotors.rotorLeft,rotorplace.left,RP[0]);
+  drawRotor(rotors.rotorMid,rotorplace.middle,RP[1]);
+  drawRotor(rotors.rotorRight,rotorplace.right,RP[2]);
+  drawReflector(rotors.reflector);
 }
 draw();

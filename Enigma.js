@@ -3,6 +3,7 @@
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 //rotates string right
 String.prototype.rotate = function (i) {
+	i=((i%this.length)+this.length)%this.length;
 	return this.slice(-i) + this.slice(0, -i);
 };
 class EnigmaMachine {
@@ -22,8 +23,8 @@ class EnigmaMachine {
 
 	constructor() {
 		this.state = {
-			rotorPositions: [0, 0, 0, 0],
-			ringPosition: [0, 0, 0, 0],
+			rotorPositions: [0, 0, 0],
+			ringPosition: [0, 0, 0],
 		};
 		this.config = {
 			rotors: {
@@ -65,13 +66,12 @@ class EnigmaMachine {
 		path.push(char);
 		char = enclod(this.config.rotors.rotorRight, alphabet, char);
 		path.push(char);
-		console.log(path);
 		Highlightpath(path);
 		return char;
 	}
 
 	reset() {
-		this.state.rotorPositions = [0, 0, 0, 0];
-		this.state.ringPositions = [0, 0, 0, 0];
+		this.state.rotorPositions = [0, 0, 0];
+		this.state.ringPositions = [0, 0, 0];
 	}
 }
