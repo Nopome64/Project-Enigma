@@ -47,24 +47,35 @@ class EnigmaMachine {
      * @param {string} char
      * @returns
      */
-		function enclod(fromalpha, toalpha, char) {
-			return toalpha[fromalpha.indexOf(char)];
+		function enclod(fromalpha, toalpha, char,rotation) {
+			// if (rotation !== 0){
+			// 	enclod(alphabet,alphabet.rotate(rotation),char);
+			// }
+			//alternate (incomplete)method to the one below
+			
+			char= alphabet[alphabet.rotate(-rotation).indexOf(char)];
+			char= toalpha[fromalpha.indexOf(char)];
+			char= alphabet[alphabet.rotate(rotation).indexOf(char)];
+			return char;
+			
 		}
+		let RP = this.state.rotorPositions;
+		let rotors = this.config.rotors;
 		let path=[];
 		path.push(char);
-		char = enclod(alphabet, this.config.rotors.rotorRight, char);
+		char = enclod(alphabet,rotors.rotorRight, char,RP[2]);
 		path.push(char);
-		char = enclod(alphabet, this.config.rotors.rotorMid, char);
+		char = enclod(alphabet,rotors.rotorMid, char);
 		path.push(char);
-		char = enclod(alphabet, this.config.rotors.rotorLeft, char);
+		char = enclod(alphabet,rotors.rotorLeft, char);
 		path.push(char);
-		char = enclod(alphabet, this.config.rotors.reflector, char);
+		char = enclod(alphabet,rotors.reflector, char);
 		path.push(char);
-		char = enclod(this.config.rotors.rotorLeft, alphabet, char);
+		char = enclod(rotors.rotorLeft, alphabet, char);
 		path.push(char);
-		char = enclod(this.config.rotors.rotorMid, alphabet, char);
+		char = enclod(rotors.rotorMid, alphabet, char);
 		path.push(char);
-		char = enclod(this.config.rotors.rotorRight, alphabet, char);
+		char = enclod(rotors.rotorRight, alphabet, char,RP[2]);
 		path.push(char);
 		Highlightpath(path);
 		return char;
