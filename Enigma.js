@@ -3,11 +3,15 @@
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 //rotates string right
 String.prototype.rotate = function (i) {
-	i=((i%this.length)+this.length)%this.length;
+	i=Math.mod(i,this.length)
 	return this.slice(-i) + this.slice(0, -i);
 };
+Math.mod=(n,d)=> ((n % d) + d) % d;
+	
+	
+
 class EnigmaMachine {
-	rotormappings = {
+	rotorMappings = {
 		I: "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
 		II: "AJDKSIRUXBLHWTMCQGZNPYFVOE",
 		III: "BDFHJLCPRTXVZNYEIWGAKMUSQO",
@@ -20,7 +24,11 @@ class EnigmaMachine {
 		RefB: "YRUHQSLDPXNGOKMIEBFZCWVJAT",
 		RefC: "FVPJIAOYEDRZXWGCTKUQSBNMHL",
 	};
+	rotorNotches={
 
+
+
+	}
 	constructor() {
 		this.state = {
 			rotorPositions: [0, 0, 0],
@@ -28,19 +36,52 @@ class EnigmaMachine {
 		};
 		this.config = {
 			rotors: {
-				reflector: this.rotormappings.RefB,
-				rotorLeft: this.rotormappings.III,
-				rotorMid: this.rotormappings.II,
-				rotorRight: this.rotormappings.I,
+				reflector: this.rotorMappings.RefB,
+				rotorLeft: this.rotorMappings.III,
+				rotorMid: this.rotorMappings.II,
+				rotorRight: this.rotorMappings.I,
 			},
 		};
 	}
 
+	rotorSpin(){
+		let RP = this.state.rotorPositions;
+
+		RP[2]=Math.mod(++RP[2],alphabet.length);
+
+
+
+
+		if (RP[2]===17){
+			RP[1]=Math.mod(++RP[1],alphabet.length);
+
+
+			if (RP[1]===22){
+				RP[0]=Math.mod(++RP[0],alphabet.length);
+		}
+
+
+
+	}
+	}	
+	/**
+	 * 
+	 * @param {string} input 
+	 */
 	encode(input) {
-		// todo
+		let word="";
+		input=input.toUpperCase();
+		for (let letter of input){
+			this.rotorSpin();
+			word+=this.encodeChar(letter,false);
+			
+		}
+		this.encodeChar(input.slice(-1));
+		return word;
+		
 	}
 
-	encodeChar(char) {
+	encodeChar(char,highlight=true) {
 		/**
      *
      * @param {string} rotor
@@ -53,31 +94,35 @@ class EnigmaMachine {
 			// }
 			//alternate (incomplete)method to the one below
 			
-			char= alphabet[alphabet.rotate(-rotation).indexOf(char)];
-			char= toalpha[fromalpha.indexOf(char)];
 			char= alphabet[alphabet.rotate(rotation).indexOf(char)];
+			char= toalpha[fromalpha.indexOf(char)];
+			char= alphabet[alphabet.rotate(-rotation).indexOf(char)];
+
 			return char;
 			
 		}
 		let RP = this.state.rotorPositions;
 		let rotors = this.config.rotors;
 		let path=[];
+
 		path.push(char);
 		char = enclod(alphabet,rotors.rotorRight, char,RP[2]);
 		path.push(char);
-		char = enclod(alphabet,rotors.rotorMid, char);
+		char = enclod(alphabet,rotors.rotorMid, char,RP[1]);
 		path.push(char);
-		char = enclod(alphabet,rotors.rotorLeft, char);
+		char = enclod(alphabet,rotors.rotorLeft, char,RP[0]);
 		path.push(char);
 		char = enclod(alphabet,rotors.reflector, char);
 		path.push(char);
-		char = enclod(rotors.rotorLeft, alphabet, char);
+		char = enclod(rotors.rotorLeft, alphabet, char,RP[0]);
 		path.push(char);
-		char = enclod(rotors.rotorMid, alphabet, char);
+		char = enclod(rotors.rotorMid, alphabet, char,RP[1]);
 		path.push(char);
 		char = enclod(rotors.rotorRight, alphabet, char,RP[2]);
 		path.push(char);
-		Highlightpath(path);
+
+		highlight && Highlightpath(path);
+		
 		return char;
 	}
 
