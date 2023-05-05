@@ -153,9 +153,9 @@ function draw(){
 
   let RP = Machine1.state.rotorPositions;
   let rotors = Machine1.config.rotors;
-  drawRotor(rotors.rotorLeft,rotorplace.left,RP[0]);
-  drawRotor(rotors.rotorMid,rotorplace.middle,RP[1]);
-  drawRotor(rotors.rotorRight,rotorplace.right,RP[2]);
+  drawRotor(rotors.rotorLeft,rotorplace.left,-RP[0]);
+  drawRotor(rotors.rotorMid,rotorplace.middle,-RP[1]);
+  drawRotor(rotors.rotorRight,rotorplace.right,-RP[2]);
   drawReflector(rotors.reflector);
 }
 draw();
