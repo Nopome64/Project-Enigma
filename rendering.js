@@ -3,6 +3,9 @@
 /** @type {HTMLCanvasElement} */
 const canvas = document.getElementById("canvs");
 const paint = canvas.getContext("2d");
+
+let theme= document.getElementById("theme");
+
 const resolution = {
   x: 1500,
   y: 800,
@@ -14,6 +17,41 @@ const rotorplace= {
   right:850,
 
 
+}
+
+
+let Palette={
+  backGround:"rgb(10,44,201)",
+  frame:"rgba(200,20,10,0.3)",
+  entry:"orange",
+  turn:"red",
+  exit:"lime",
+
+}
+
+let colors={
+  Alpha:{
+    backGround:"rgb(10,44,201)",
+    frame:"rgba(200,20,10,0.3)",
+    entry:"orange",
+    turn:"red",
+    exit:"lime",
+  },
+  Dandelion: { 
+  backGround:"rgb(242,200,82)",
+  frame:"rgba(200,20,10,0.3)",
+  entry:"orange",
+  turn:"red",
+  exit:"lime",
+ },
+
+}
+
+
+function changeTheme(){
+  let S = document.getElementById("themes").value;
+  Palette=colors[S];
+  draw
 }
 
 const boxYoffset=50;
@@ -116,17 +154,18 @@ for(let i=0;i<ref.length;i++){
 function Highlightpath(path){
   paint.lineWidth=2;
 
-  paint.fillStyle="orange";
-  paint.strokeStyle="orange";
+  paint.fillStyle=Palette.entry;
+  paint.strokeStyle=Palette.entry;
   
   drawpath(path[0],path[1],rotorplace.right);
   drawpath(path[1],path[2],rotorplace.middle);
   drawpath(path[2],path[3],rotorplace.left);
-  paint.fillStyle="red";
-  paint.strokeStyle="red";
+  paint.fillStyle=Palette.turn;
+  paint.strokeStyle=Palette.turn;
   drawRefPath(path[3]);
-  paint.fillStyle="lime";
-  paint.strokeStyle="lime";
+  paint.fillStyle=Palette.exit;
+  paint.strokeStyle=Palette.exit;
+  
   drawpath(path[5],path[4],rotorplace.left);
   drawpath(path[6],path[5],rotorplace.middle);
   drawpath(path[7],path[6],rotorplace.right);
@@ -143,9 +182,9 @@ function draw(){
   paint.strokeStyle="black";
   paint.lineWidth=1;
 
-  paint.fillStyle = "rgb(10,44,201)";
+  paint.fillStyle = Palette.backGround;
   paint.fillRect(0, 0, resolution.x, resolution.y);
-  paint.fillStyle = "rgba(200,20,10,0.3)";
+  paint.fillStyle = Palette.frame;
   for (let i = 0; i < 5; i++) {
     paint.fillRect(100 + i * 200, boxYoffset, 150, 700);
 

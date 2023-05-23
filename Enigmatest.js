@@ -1,6 +1,6 @@
 /// <reference path="./rendering.js"/>
 const bone=document.getElementById('bone');
-const input=document.getElementById('entry')
+const input=document.getElementById('entry');
 
 let Machine1=new EnigmaMachine();
 
