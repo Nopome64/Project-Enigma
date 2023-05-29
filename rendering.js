@@ -40,18 +40,31 @@ let colors={
   Dandelion: { 
   backGround:"rgb(242,200,82)",
   frame:"rgba(200,20,10,0.3)",
-  entry:"orange",
-  turn:"red",
-  exit:"lime",
+  entry:"blue",
+  turn:"white",
+  exit:"rgb(5, 239, 242)",
  },
-
+ Lime: { 
+  backGround:"rgb(0,255,20)",
+  frame:"rgba(200,20,10,0.3)",
+  entry:"yellow",
+  turn:"purple",
+  exit:"rgb(5, 239, 242)",
+ },
+ Midnight:{ 
+  backGround:"rgb(30,30,30)",
+  frame:"rgba(0,0,0,1)",
+  entry:"red",
+  turn:"red",
+  exit:"red",
+ },
 }
 
 
 function changeTheme(){
   let S = document.getElementById("themes").value;
   Palette=colors[S];
-  draw
+  draw();
 }
 
 const boxYoffset=50;

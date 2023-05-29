@@ -1,0 +1,37 @@
+.Arrow{
+    background:rgb(0, 255, 0);
+    font-size:30px;
+    padding-left:20px;
+    padding-right:20px;
+}
+
+#BLU{
+    position:absolute;
+     left:355px;
+     top:35px;
+}
+#BMU{
+    position:absolute;
+     left:555px;
+     top:35px;
+}
+#BRU{
+    position:absolute;
+     left:755px;
+     top:35px;
+}
+#BLD{
+    position:absolute;
+     left:355px;
+     top:780px;
+}
+#BMD{
+    position:absolute;
+     left:555px;
+     top:780px;
+}
+#BRD{
+    position:absolute;
+     left:755px;
+     top:780px;
+}

@@ -10,11 +10,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=">
     <title>Enigma</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
     <script src="Enigma.js"></script>
-    <script src="Enigmatest.js"defer></script>§§
+    <script src="Enigmatest.js"defer></script>
     <script src="rendering.js" defer></script>
 </head>
 <body>
+    <div>
     <!-- INPUT -->
     <input type="text" id="entry">
 
@@ -22,7 +24,8 @@
     <select onchange="changeTheme()" name="theme" id="themes">
         <option value="Alpha">alpha</option>
         <option value="Dandelion">dandelion</option>
-
+        <option value="Lime">lime</option>
+        <option value="Midnight">midnight</option>
 
     </select>
 
@@ -31,11 +34,33 @@
 </input>
 <!-- INPUT -->
 
-<!-- BUTTON -->
+<!-- BUTTONS -->
 <button id="bone">
     run
  </button>
-<!-- BUTTON -->
+ 
+<!-- B=Button L/M/R =left middle right U/D = up down -->
+ <button class="Arrow" id="BLU">
+    Λ
+ </button>
+ <button class="Arrow" id="BMU">
+    Λ   
+ </button>
+ <button class="Arrow" id="BRU">
+    Λ   
+ </button>
+ <button class="Arrow" id="BLD">
+    V
+ </button>
+ <button class="Arrow" id="BMD">
+    V
+ </button>
+ <button class="Arrow" id="BRD">
+    V
+ </button>
+
+<!-- BUTTONS -->
+</div>
     <canvas id="canvs">
     </canvas>
 </body>
