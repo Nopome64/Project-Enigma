@@ -164,6 +164,14 @@ for(let i=0;i<ref.length;i++){
 
 }
 
+
+function ShowState(RotorState){
+paint.fillStyle="black";
+paint.fillText("State:"+RotorState,1100,30);
+
+
+}
+
 function Highlightpath(path){
   paint.lineWidth=2;
 
@@ -209,5 +217,6 @@ function draw(){
   drawRotor(rotors.rotorMid,rotorplace.middle,-RP[1]);
   drawRotor(rotors.rotorRight,rotorplace.right,-RP[2]);
   drawReflector(rotors.reflector);
+  ShowState(RP);
 }
 draw();
