@@ -166,8 +166,9 @@ for(let i=0;i<ref.length;i++){
 
 
 function ShowState(RotorState){
-paint.fillStyle="black";
+paint.fillStyle="lime";
 paint.fillText("State:"+RotorState,1100,30);
+paint.fillText("State:"+alphabet[RotorState[0]]+alphabet[RotorState[1]]+alphabet[RotorState[2]],1100,50);
 
 
 }
